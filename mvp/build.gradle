@@ -45,9 +45,9 @@ install {
                 }
                 developers {
                     developer {
-                        id 'caijinabraham'        //填写开发者的一些基本信息
-                        name 'caijinabraham'    //填写开发者的一些基本信息
-                        email 'caijinabraham@outlook.com'   //填写开发者的一些基本信息
+                        id 'xxx'        //填写开发者的一些基本信息
+                        name 'xxx'    //填写开发者的一些基本信息
+                        email 'xx@xx'   //填写开发者的一些基本信息
                     }
                 }
                 scm {
@@ -87,8 +87,8 @@ artifacts {
 
 
 bintray {
-    user = 'XXX'    //读取 local.properties 文件里面的 bintray.user
-    key = 'XXX'   //读取 local.properties 文件里面的 bintray.apikey
+    user = 'XXX'    // bintray.user 输入在bintray网站的用户名
+    key = 'XXX'   // bintray.apikey 输入api 在bintray网站可查看api
     pkg {
         repo = "maven"         //bintray.com发布到的指定仓库名为'maven'的仓库中
         name = "mvplibrary"    //发布到该仓库的指定package中   这两者关系到Library将要上传到的路径
@@ -125,9 +125,9 @@ install {
                 }
                 developers {
                     developer {
-                        id 'leonhua2017'        //填写bintray或者github的用户名
-                        name 'leonhua2017'         //姓名
-                        email 'leon.gitlibrary@gmail.com'//邮箱
+                        id 'xxx'        //填写bintray或者github的用户名
+                        name 'xxx'         //姓名
+                        email 'xx@xx'//邮箱
                     }
                 }
                 scm {
