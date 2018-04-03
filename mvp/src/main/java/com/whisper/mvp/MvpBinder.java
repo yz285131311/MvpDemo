@@ -1,6 +1,7 @@
 package com.whisper.mvp;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -12,7 +13,7 @@ import java.lang.reflect.Type;
 * @time 2017/7/21 17:43
 * @description 为MVP各层提供绑定接口 负责初始化BasePresenter 、BaseModel
 */
-public class MVPBinder {
+public class MvpBinder {
 
     /**
      * 初始化Presenter
@@ -25,7 +26,7 @@ public class MVPBinder {
         if(tpPresenter == null)
             return null;
         Type tpModel = getModelFromPresenterType(tpPresenter);
-        Log.d("MVPBinder",tpPresenter + "," + tpModel);
+        Log.d("MvpBinder",tpPresenter + "," + tpModel);
         BasePresenter bp = (BasePresenter) getInstance(tpPresenter);
         if(bp != null) {
             BaseModel bm = (BaseModel) getInstance(tpModel);
@@ -58,16 +59,16 @@ public class MVPBinder {
     public static Type pasePresenterType(Object o) {
         Class<?> clazz = o.getClass();
         Type[] types2 = clazz.getGenericInterfaces();
-        Log.d("MVPBinder","检测中..1 : "  + clazz.getCanonicalName() + "," + types2.length);
+        Log.d("MvpBinder","检测中..1 : "  + clazz.getCanonicalName() + "," + types2.length);
         // 判断当前类型是否是泛型 如果不是 检查父类是不是泛型 循环向上检测 这里需要注意：
         //BaseActivity -> AppCompatActivity -> FragmentActivity -> BaseFragementActivity -> ... -> ContextWrapper -> Context
         //可以看到AppCompatAcitivty间接继承了不少类 而其实在AppCompatActivity之后我们就不需要去做泛型检查了 所以做了如下优化：减少检测层级
         while (!(clazz.getGenericSuperclass() instanceof ParameterizedType)) {
             Type type = clazz.getGenericSuperclass();
             clazz = clazz.getSuperclass();
-            Log.d("MVPBinder","检测中.. : "  + type );
+            Log.d("MvpBinder","检测中.. : "  + type );
             if(type == null) {
-                Log.e("MVP","type == null");
+                Log.d("MVP","type == null");
                 return null;
             }
             String cName = ((Class)type).getName();
@@ -75,20 +76,20 @@ public class MVPBinder {
                 //当未设置泛型时 会检测只最顶层的类 所以这里减少检测层级
                 // 由于Acitvity继承层级较多，我们其实只需要遍历检测至基类Acitivity中即可 当前项目是基于AppCompateActivity
                 //同时也对继承于Activity的项目做了兼容
-                Log.e("MVPBinder","找不到泛型类");
+                Log.d("MvpBinder","找不到泛型类");
                 return null;
             }
         }
         Type type = clazz.getGenericSuperclass();
-        Log.d("MVPBinder","已找到泛型类: "  + type);
+        Log.d("MvpBinder","已找到泛型类: "  + type);
         // 获取泛型的参数列表
         Type[] types = getGeneralTypes(type);
         for(Type t : types) {
             if("P".equals(t.toString())) {
-                Log.d("MVPBinder","未使用MVP");
+                Log.d("MvpBinder","未使用MVP");
                 continue;
             }
-            Log.d("MVPBinder","Presenter类型" + t.toString() + " class = " + t.getClass().getName());
+            Log.d("MvpBinder","Presenter类型" + t.toString() + " class = " + t.getClass().getName());
             if(BasePresenter.class.isAssignableFrom((Class<?>) t)){
                 return t;
             }

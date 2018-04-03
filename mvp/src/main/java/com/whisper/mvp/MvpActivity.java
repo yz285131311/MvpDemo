@@ -1,6 +1,7 @@
 package com.whisper.mvp;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
@@ -9,12 +10,13 @@ import android.util.Log;
 * @time 2017/7/21 15:36
 * @description  提供MVP支持
 */
-public abstract class MVPActivity<P extends BasePresenter> extends AppCompatActivity {
+public abstract class MvpActivity<P extends BasePresenter> extends AppCompatActivity {
     protected P mPresenter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(getLayoutId());
         initModelAndPresenter();
     }
 
@@ -25,12 +27,15 @@ public abstract class MVPActivity<P extends BasePresenter> extends AppCompatActi
     }
 
     private void initModelAndPresenter() {
-        this.mPresenter = MVPBinder.initPresenter(this);
+        this.mPresenter = MvpBinder.initPresenter(this);
         if(mPresenter != null) {
             mPresenter.setActivity(this);
             mPresenter.setView(this);
             mPresenter.onCreate(); //提供onCreate入口
         }
-        Log.e(this.getClass().getName(),"initModeAndPresenter is invoked ...");
+        Log.d(this.getClass().getName(),"initModeAndPresenter is invoked ...");
     }
+
+    /** 获取布局文件ID */
+    protected abstract int getLayoutId();
 }
