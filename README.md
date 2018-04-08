@@ -4,7 +4,7 @@
 
 ## 添加依赖
 ```
-  compile 'com.whisper.mvp:mvp:1.0.0'
+  compile 'com.whisper.mvp:mvp:1.1.0'
 ```
 
 ### Activity
